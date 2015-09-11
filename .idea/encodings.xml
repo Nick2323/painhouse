@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/css/bootstrap.css" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/css/bootstrap.min.css" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/css/reset.css" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/css/shop-item.css" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/css/style.css" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/css/style_3.css" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/images/Thumbs.db" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/images/cd-icon.svg" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/images/footer_carousel" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/java/jc/bootstrap.js" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/java/jc/bootstrap.min.js" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/java/jc/jquery.js" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/java/jc/main.js" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/java/jc/modernizr.js" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/java/jc/snap.svg-min.js" charset="windows-1251" />
+  </component>
+</project>
