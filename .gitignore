@@ -1,0 +1,25 @@
+# IDE
+.idea/
+*.iml
+*.swp
+*~
+
+# Runtime files
+protected/runtime/*
+!protected/runtime/.gitkeep
+
+# Uploaded files
+photo/*
+!photo/.gitkeep
+gallery/*
+!gallery/.gitkeep
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# Config (може містити паролі)
+protected/config/main-local.php
