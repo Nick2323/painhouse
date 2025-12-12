@@ -2,155 +2,86 @@
 $this->pageTitle=Yii::app()->name;
 ?>
 
-<!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<!-- Hero Section -->
+<section class="hero-section">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="<?php echo Yii::app()->baseUrl; ?>">Ансамбль "Воля"</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="<?php echo Yii::app()->createUrl('site/index'); ?>">Головна</a>
-                </li>
-                <li>
-                    <a href="<?php echo Yii::app()->createUrl('site/ensemble'); ?>">Про ансамбль</a>
-                </li>
-                <li>
-                    <a href="<?php echo Yii::app()->createUrl('site/repertoire'); ?>">Репертуар</a>
-                </li>
-                <li>
-                    <a href="<?php echo Yii::app()->createUrl('site/gallery'); ?>">Галерея</a>
-                </li>
-                <li>
-                    <a href="<?php echo Yii::app()->createUrl('site/contacts'); ?>">Контакти</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<!-- Page Content -->
-<div class="cd-svg-container">
-    <svg id="cd-animated-svg" version="1.1" x="0px" y="0px" width="200px" height="200px" viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
-		<title>Buildings</title>
-        <desc>3 minimal buildings with floating clouds</desc>
-        <g id="cd-loading">
-            <g id="cd-circle">
-                <circle id="cd-loading-circle" class="cd-stroke cd-stroke-color-2" cx="100" cy="100" r="77.5"/>
-                <circle id="cd-loading-circle-filled" class="cd-stroke cd-stroke-color-3" cx="100" cy="100" r="77.5" transform="rotate(-90 100 100)"/>
-            </g>
-            <g id="cd-play-btn">
-                <rect class="cd-pointer" x="84" y="78" width="33" height="44"/>
-                <polygon class="cd-fill-color-1" points="84,78 116,100 84,122 	"/>
-            </g>
-            <g id="cd-pause-btn" transform="translate(100 100) scale(0)">
-                <rect class="cd-pointer" x="81" y="80" width="38" height="40"/>
-                <rect class="cd-fill-color-1" x="81" y="80" width="11" height="40"/>
-                <rect class="cd-fill-color-1" x="108" y="80" width="11" height="40"/>
-            </g>
-        </g>
-        <g id="cd-buildings">
-            <g id="cd-cloud-1" transform="translate(-80 0)">
-                <line class="cd-stroke cd-stroke-color-2" x1="5" y1="13" x2="29" y2="13"/>
-                <line class="cd-stroke cd-stroke-color-2" x1="35" y1="13" x2="44" y2="13"/>
-                <line class="cd-stroke cd-stroke-color-2" x1="72" y1="27" x2="14" y2="27"/>
-            </g>
-            <g id="cd-cloud-2" transform="translate(70 0)">
-                <line class="cd-stroke cd-stroke-color-2" x1="191" y1="68" x2="159" y2="68"/>
-                <line class="cd-stroke cd-stroke-color-2" x1="153" y1="68" x2="144" y2="68"/>
-                <line class="cd-stroke cd-stroke-color-2" x1="179" y1="83" x2="133" y2="83"/>
-            </g>
-            <g id="cd-home-3">
-                <polygon id="cd-home-3-roof" class="cd-stroke cd-stroke-color-1" points="59.4,55 95,15 130.6,55" transform="translate(0 20)"/>
-                <rect id="cd-home-3-base" class="cd-stroke cd-stroke-color-1" x="66" y="54" width="58" height="0" transform="rotate(180 95 116)" data-height="124"/>
-                <circle id="cd-home-3-window" class="cd-stroke cd-stroke-color-1" cx="95" cy="77" r="11" transform="translate(95 77) scale(0)"/>
-            </g>
-            <g id="cd-home-2">
-                <rect id="cd-home-2-base" class="cd-stroke cd-stroke-color-1" x="98" y="132" width="70" height="0" transform="rotate(180 133 155)" data-height="46"/>
-                <rect id="cd-home-2-roof" class="cd-stroke cd-stroke-color-1" x="98" y="122" width="0" height="10" data-width="70"/>
-                <rect id="cd-home-2-door" class="cd-stroke cd-stroke-color-1" x="141" y="156" width="16" height="0" transform="rotate(180 149 167)" data-height="22"/>
-                <rect id="cd-home-2-window" class="cd-stroke cd-stroke-color-1" x="106" y="143" width="26" height="10" transform="translate(119 148) scale(0)"/>
-            </g>
-            <g id="cd-home-1">
-                <rect id="cd-home-1-chimney" class="cd-stroke cd-stroke-color-1" x="34" y="89" width="11" height="11" transform="translate(0 70)"/>
-                <rect id="cd-home-1-base" class="cd-stroke cd-stroke-color-1" x="29" y="108" width="70" height="0" transform="rotate(180 64 143)" data-height="70"/>
-                <rect id="cd-home-1-roof" class="cd-stroke cd-stroke-color-1" x="23" y="100" width="0" height="9" data-width="81"/>
-                <rect id="cd-home-1-door" class="cd-stroke cd-stroke-color-1" x="53" y="150" width="20" height="0" transform="rotate(180 63 164)" data-height="28"/>
-                <rect id="cd-home-1-window" class="cd-stroke cd-stroke-color-1" x="53" y="121" width="20" height="18" transform="translate(63 130) scale(0)"/>
-            </g>
-            <line id="cd-floor" class="cd-stroke cd-stroke-color-1" x1="2" y1="178" x2="2" y2="178" data-x="198"/>
-        </g>
-	</svg>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="jumbotron text-center">
-                <h1>Ансамбль "Воля"</h1>
-                <p class="lead">Івано-Франківського обласного громадського товариства «Бойківщина»</p>
-                <p>Збереження та популяризація бойківських народних пісень</p>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4>Про ансамбль</h4>
-                        </div>
-                        <div class="panel-body">
-                            <p>Ансамбль розпочав свою діяльність у 2004 році під керівництвом Лариси Дуди.</p>
-                            <a href="<?php echo Yii::app()->createUrl('site/ensemble'); ?>" class="btn btn-primary">Детальніше</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4>Репертуар</h4>
-                        </div>
-                        <div class="panel-body">
-                            <p>У репертуарі ансамблю близько 30 українських народних та авторських пісень.</p>
-                            <a href="<?php echo Yii::app()->createUrl('site/repertoire'); ?>" class="btn btn-primary">Переглянути</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4>Галерея</h4>
-                        </div>
-                        <div class="panel-body">
-                            <p>Фотографії з виступів та участі у фольклорних фестивалях.</p>
-                            <a href="<?php echo Yii::app()->createUrl('site/gallery'); ?>" class="btn btn-primary">Переглянути</a>
-                        </div>
-                    </div>
-                </div>
+        <div class="hero-content fade-in">
+            <h1 class="hero-title">Вітаємо в ансамблі "Воля"</h1>
+            <p class="hero-subtitle">Івано-Франківського обласного громадського товариства «Бойківщина»</p>
+            <p class="hero-description">Збереження та популяризація бойківських народних пісень вже понад 20 років</p>
+            <div class="hero-buttons">
+                <a href="<?php echo Yii::app()->createUrl('site/ensemble'); ?>" class="btn-modern btn-primary-modern">Про ансамбль</a>
+                <a href="<?php echo Yii::app()->createUrl('site/repertoire'); ?>" class="btn-modern btn-secondary-modern">Репертуар</a>
             </div>
         </div>
     </div>
+</section>
 
-    <hr>
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="cards-grid">
+            <div class="modern-card fade-in">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <h3>Про ансамбль</h3>
+                <p>Ансамбль розпочав свою діяльність у 2004 році під керівництвом Лариси Дуди. Колектив об'єднує талановитих виконавців, які люблять українську народну пісню.</p>
+                <a href="<?php echo Yii::app()->createUrl('site/ensemble'); ?>" class="card-link">
+                    Детальніше →
+                </a>
+            </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <p>&copy; <?php echo date('Y'); ?> Ансамбль "Воля"</p>
+            <div class="modern-card fade-in">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18V5l12-2v13"></path>
+                        <circle cx="6" cy="18" r="3"></circle>
+                        <circle cx="18" cy="16" r="3"></circle>
+                    </svg>
+                </div>
+                <h3>Репертуар</h3>
+                <p>У репертуарі ансамблю понад 30 українських народних та авторських пісень. Включає різдвяні пісні, весняні обрядові, жартівливі та ліричні композиції.</p>
+                <a href="<?php echo Yii::app()->createUrl('site/repertoire'); ?>" class="card-link">
+                    Переглянути →
+                </a>
+            </div>
+
+            <div class="modern-card fade-in">
+                <div class="card-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                </div>
+                <h3>Галерея</h3>
+                <p>Фотографії з виступів та участі у фольклорних фестивалях. Незабутні моменти наших концертів та виступів на різних культурних заходах.</p>
+                <a href="<?php echo Yii::app()->createUrl('site/gallery'); ?>" class="card-link">
+                    Переглянути →
+                </a>
             </div>
         </div>
-    </footer>
-</div>
+    </div>
+</section>
 
-<script src="<?php echo Yii::app()->baseUrl;?>/js/snap.svg-min.js"></script>
-<script src="<?php echo Yii::app()->baseUrl;?>/jc/jquery.js"></script>
-<script src="<?php echo Yii::app()->baseUrl;?>/jc/bootstrap.min.js"></script>
+<!-- About Section -->
+<section class="about-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2 class="section-title">Наша місія</h2>
+            <p class="section-subtitle">Збереження української культурної спадщини</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Ансамбль "Воля" – це колектив однодумців, які об'єдналися навколо ідеї збереження та популяризації бойківських народних пісень. Ми виконуємо автентичні та сучасні аранжування українських народних пісень, беремо участь у фестивалях та концертах.</p>
+                <p>Наша діяльність спрямована на те, щоб передати майбутнім поколінням багатство української народної культури, зберегти традиції та звичаї нашого народу.</p>
+            </div>
+        </div>
+    </div>
+</section>
