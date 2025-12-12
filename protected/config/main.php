@@ -50,13 +50,11 @@ return array(
 		// uncomment the following to use a MySQL database
 
 		'db'=>array(
-			'connectionString' => 'mysql:host=db;dbname=kogut',
+			'connectionString' => 'mysql:host=db;dbname=kogut;charset=utf8',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => 'root',
 			'charset' => 'utf8',
-			'initCommand' => 'SET NAMES utf8',
-			'tablePrefix' => '',
 		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
