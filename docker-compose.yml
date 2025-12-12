@@ -1,0 +1,71 @@
+services:
+  # PHP + Apache Web Server
+  web:
+    image: php:7.4-apache
+    platform: linux/amd64
+    container_name: painhouse_web
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html
+    depends_on:
+      - db
+    networks:
+      - painhouse_network
+    command: >
+      bash -c "
+      docker-php-ext-install mysqli pdo pdo_mysql &&
+      a2enmod rewrite &&
+      sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf &&
+      chmod -R 777 /var/www/html/photo &&
+      chmod -R 777 /var/www/html/gallery &&
+      mkdir -p /var/www/html/protected/runtime &&
+      chmod -R 777 /var/www/html/protected/runtime &&
+      apache2-foreground
+      "
+
+  # MySQL Database (MySQL 8.0 підтримує ARM64/Apple Silicon)
+  db:
+    image: mysql:8.0
+    platform: linux/amd64
+    container_name: painhouse_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kogut
+      MYSQL_USER: painhouse
+      MYSQL_PASSWORD: painhouse123
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database.sql:/docker-entrypoint-initdb.d/database.sql
+    networks:
+      - painhouse_network
+    command: --character-set-server=utf8 --collation-server=utf8_general_ci --default-authentication-plugin=mysql_native_password
+
+  # phpMyAdmin (опціонально, для управління БД)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    platform: linux/amd64
+    container_name: painhouse_phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+      UPLOAD_LIMIT: 300M
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - painhouse_network
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  painhouse_network:
+    driver: bridge
