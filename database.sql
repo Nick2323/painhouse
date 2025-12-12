@@ -1,6 +1,10 @@
 -- Створення бази даних для проекту PainHouse
 -- Ансамбль "Воля"
 
+SET NAMES utf8;
+SET CHARACTER SET utf8;
+SET collation_connection = 'utf8_general_ci';
+
 CREATE DATABASE IF NOT EXISTS `kogut` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `kogut`;
 
