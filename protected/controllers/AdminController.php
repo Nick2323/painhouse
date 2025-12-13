@@ -429,4 +429,75 @@ class AdminController extends Controller
         }
     }
 
+    public function actionGetstats(){
+        if(isset($_POST['login']) && isset($_POST['password'])){
+            if($this->check_password($_POST['login'], $_POST['password'])){
+                $membersCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM members")->queryScalar();
+                $songsCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM repertoire WHERE Name!=''")->queryScalar();
+                $mediaCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM media")->queryScalar();
+                $categoriesCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM repertoire WHERE Name=''")->queryScalar();
+
+                echo json_encode(array(
+                    'stats' => array(
+                        'members' => $membersCount,
+                        'songs' => $songsCount,
+                        'media' => $mediaCount,
+                        'categories' => $categoriesCount
+                    )
+                ));
+                return;
+            }
+        }
+        echo json_encode(array('error' => 'Unauthorized'));
+    }
+
+    public function actionGetmembers(){
+        if(isset($_POST['login']) && isset($_POST['password'])){
+            if($this->check_password($_POST['login'], $_POST['password'])){
+                $members = Yii::app()->db->createCommand(
+                    "SELECT ID, FullName, PhotoName, Description FROM members ORDER BY ID"
+                )->queryAll();
+
+                echo json_encode(array('members' => $members));
+                return;
+            }
+        }
+        echo json_encode(array('error' => 'Unauthorized'));
+    }
+
+    public function actionGetrepertoire(){
+        if(isset($_POST['login']) && isset($_POST['password'])){
+            if($this->check_password($_POST['login'], $_POST['password'])){
+                $repertoire = Yii::app()->db->createCommand(
+                    "SELECT Name, Category FROM repertoire WHERE Name!='' ORDER BY Category, ID"
+                )->queryAll();
+
+                $categories = Yii::app()->db->createCommand(
+                    "SELECT DISTINCT Category FROM repertoire WHERE Name='' ORDER BY ID"
+                )->queryColumn();
+
+                echo json_encode(array(
+                    'repertoire' => $repertoire,
+                    'categories' => $categories
+                ));
+                return;
+            }
+        }
+        echo json_encode(array('error' => 'Unauthorized'));
+    }
+
+    public function actionGetmedia(){
+        if(isset($_POST['login']) && isset($_POST['password'])){
+            if($this->check_password($_POST['login'], $_POST['password'])){
+                $media = Yii::app()->db->createCommand(
+                    "SELECT ID, MediaFileName, MediaType, Description FROM media ORDER BY ID DESC"
+                )->queryAll();
+
+                echo json_encode(array('media' => $media));
+                return;
+            }
+        }
+        echo json_encode(array('error' => 'Unauthorized'));
+    }
+
 }
