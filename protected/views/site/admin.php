@@ -60,7 +60,7 @@ $this->pageTitle = 'Адмін-панель - ' . Yii::app()->name;
                 </div>
 
                 <div class="form-hint">
-                    <p>Стандартні дані для входу: <br><strong>Логін:</strong> admin | <strong>Пароль:</strong> admin</p>
+                    <p>Стандартні дані для входу: <br><strong>Логін:</strong> admin | <strong>Пароль:</strong> Admin2025!</p>
                 </div>
 
                 <?php $this->endWidget(); ?>
@@ -251,15 +251,17 @@ $this->pageTitle = 'Адмін-панель - ' . Yii::app()->name;
     function successFunc(arr){
         console.log("Server response:", arr);
 
-        if(arr && arr!="" && arr['site']){
-            var site=arr['site'];
-            $("#admin_panel").empty();
-            $("#admin_panel").append(site);
-            showMessage("Успішний вхід!", "success");
+        if(arr && arr.success === true && arr.redirect){
+            showMessage("Успішний вхід! Перенаправлення...", "success");
+            // Redirect to admin dashboard
+            setTimeout(function() {
+                window.location.href = arr.redirect;
+            }, 500);
         }
         else{
-            showMessage("Не правильний логін або пароль. Перевірте дані для входу.", "error");
-            console.error("Login failed - empty or invalid response");
+            var message = arr.message || "Не правильний логін або пароль. Перевірте дані для входу.";
+            showMessage(message, "error");
+            console.error("Login failed:", arr);
         }
     }
 

@@ -2,6 +2,7 @@
 
 class AdminController extends Controller
 {
+    public $layout='admin';
 
     private function admin_encoding($text){
         return sha1($text);
@@ -19,6 +20,40 @@ class AdminController extends Controller
         }
         else{
             return false;
+        }
+    }
+
+    private function isAdminLoggedIn(){
+        return Yii::app()->session->get('admin_logged_in') === true;
+    }
+
+    private function setAdminSession($login){
+        Yii::app()->session->add('admin_logged_in', true);
+        Yii::app()->session->add('admin_login', $login);
+    }
+
+    private function clearAdminSession(){
+        Yii::app()->session->remove('admin_logged_in');
+        Yii::app()->session->remove('admin_login');
+    }
+
+    public function actionDashboard(){
+        if(!$this->isAdminLoggedIn()){
+            $this->redirect(array('site/admin'));
+            return;
+        }
+        $this->render('mainpanel');
+    }
+
+    public function actionLogout(){
+        $this->clearAdminSession();
+        if(Yii::app()->request->isAjaxRequest){
+            echo json_encode(array(
+                "success" => true,
+                "redirect" => Yii::app()->createUrl('site/admin')
+            ));
+        } else {
+            $this->redirect(array('site/admin'));
         }
     }
 
@@ -390,18 +425,19 @@ class AdminController extends Controller
                 $Login=$data['login'];
                 $Password=$data['password'];
                 if($this->check_password($Login,$Password)){
-                    $text="";
-                    if($this->beforeRender('mainpanel')){
-                        $text=$this->renderPartial('mainpanel',null,true);
-                        $this->afterRender('mainpanel',$text);
-                        $text=$this->processOutput($text);
-                    }
+                    // Set admin session
+                    $this->setAdminSession($Login);
+
+                    // Return success with redirect URL
                     $check=false;
-                    echo json_encode(array("site"=>$text));
+                    echo json_encode(array(
+                        "success" => true,
+                        "redirect" => Yii::app()->createUrl('admin/dashboard')
+                    ));
                 }
         }
         if($check){
-            echo json_encode("");
+            echo json_encode(array("success" => false, "message" => "Невірний логін або пароль"));
         }
     }
 

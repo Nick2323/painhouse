@@ -331,21 +331,23 @@
     }
 
     function adminlogout(){
-        $.ajax({
-            type:"POST",
-            url:'<?php echo Yii::app()->createAbsoluteUrl("site/logout"); ?>',
-            data:{},
-            dataType:"json",
-            success: function(arr) {
-                var site=arr['site'];
-                login="";
-                password="";
-                $("#admin_panel").empty();
-                $("#admin_panel").append(site);
-            },
-            error: function() {
-                alert("Помилка виходу");
-            }
-        })
+        if(confirm("Ви впевнені, що хочете вийти?")){
+            $.ajax({
+                type:"POST",
+                url:'<?php echo Yii::app()->createAbsoluteUrl("admin/logout"); ?>',
+                data:{},
+                dataType:"json",
+                success: function(arr) {
+                    if(arr && arr.success && arr.redirect){
+                        window.location.href = arr.redirect;
+                    } else {
+                        window.location.href = '<?php echo Yii::app()->createUrl("site/admin"); ?>';
+                    }
+                },
+                error: function() {
+                    alert("Помилка виходу. Спробуйте ще раз.");
+                }
+            });
+        }
     }
 </script>

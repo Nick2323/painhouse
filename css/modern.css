@@ -21,11 +21,31 @@
     box-sizing: border-box;
 }
 
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
     background: var(--bg-light);
+}
+
+/* Remove any gaps from wrapper divs */
+.pageMain1, #page {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Ensure header sits at the very top */
+.modern-header {
+    margin-top: 0 !important;
+    position: relative;
+    top: 0;
 }
 
 /* Навігаційне меню */
