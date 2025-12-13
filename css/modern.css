@@ -354,30 +354,67 @@ body {
     color: var(--white);
 }
 
-/* Header */
+/* Header - Logo Style */
 .modern-header {
-    background: linear-gradient(135deg, rgba(44, 95, 141, 0.95) 0%, rgba(74, 144, 226, 0.95) 100%);
-    color: var(--white);
-    padding: 2rem;
+    background: linear-gradient(135deg, #2c5f8d 0%, #4a90e2 100%);
+    color: var(--white) !important;
+    padding: 0 !important;
     text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.modern-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,0 L1200,0 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.05)"/></svg>') repeat-x;
+    opacity: 0.3;
 }
 
 .header-content {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 2.5rem 2rem !important;
+    position: relative;
+    z-index: 1;
 }
 
-.site-title {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    font-weight: 700;
-    color: var(--white) !important;
+.modern-header .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.site-subtitle {
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 300;
+.modern-header h1.site-title,
+.modern-header .site-title,
+header.modern-header h1 {
+    font-size: 3rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 2px;
+    line-height: 1.2 !important;
+    background: none !important;
+}
+
+.modern-header p.site-subtitle,
+.modern-header .site-subtitle,
+header.modern-header p {
+    font-size: 1.3rem !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: 400 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
 }
 
 /* Page Header */
@@ -655,8 +692,21 @@ body {
         font-size: 2rem;
     }
 
-    .site-title {
-        font-size: 1.8rem;
+    .modern-header h1.site-title,
+    .modern-header .site-title,
+    header.modern-header h1 {
+        font-size: 2rem !important;
+        letter-spacing: 1px;
+    }
+
+    .modern-header p.site-subtitle,
+    .modern-header .site-subtitle,
+    header.modern-header p {
+        font-size: 1rem !important;
+    }
+
+    .header-content {
+        padding: 2rem 1rem !important;
     }
 
     .page-title {

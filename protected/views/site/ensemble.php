@@ -18,7 +18,21 @@ $this->pageTitle = 'Склад ансамблю - ' . Yii::app()->name;
 
         if (!empty($members)): ?>
             <div class="cards-grid">
-                <?php foreach ($members as $index => $member): ?>
+                <?php
+                // Унікальні кольорові схеми для кожного учасника
+                $gradients = array(
+                    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',  // Purple
+                    'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',  // Pink
+                    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',  // Blue
+                    'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',  // Green
+                    'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',  // Yellow
+                    'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',  // Teal
+                    'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',  // Pastel
+                    'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',  // Rose
+                    'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',  // Peach
+                );
+
+                foreach ($members as $index => $member): ?>
                     <div class="member-card modern-card fade-in clickable-card"
                          onclick="openMemberModal(<?php echo $index; ?>)"
                          data-member-id="<?php echo $index; ?>">
@@ -27,8 +41,11 @@ $this->pageTitle = 'Склад ансамблю - ' . Yii::app()->name;
                                 <img src="<?php echo Yii::app()->baseUrl; ?>/photo/<?php echo CHtml::encode($member->PhotoName); ?>"
                                      alt="<?php echo CHtml::encode($member->FullName); ?>" />
                             </div>
-                        <?php else: ?>
-                            <div class="member-photo member-photo-placeholder">
+                        <?php else:
+                            $gradientIndex = $index % count($gradients);
+                            $gradient = $gradients[$gradientIndex];
+                        ?>
+                            <div class="member-photo member-photo-placeholder" style="background: <?php echo $gradient; ?>">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="12" cy="7" r="4"></circle>
@@ -72,6 +89,18 @@ $this->pageTitle = 'Склад ансамблю - ' . Yii::app()->name;
             </div>
 
             <script>
+                var gradients = [
+                    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+                    'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                    'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                    'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                    'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+                    'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+                    'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)',
+                    'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
+                ];
+
                 var membersData = [
                     <?php foreach ($members as $member): ?>
                     {
@@ -92,9 +121,12 @@ $this->pageTitle = 'Склад ансамблю - ' . Yii::app()->name;
                     var photoContainer = document.getElementById('modalPhoto');
                     if (member.photo) {
                         photoContainer.innerHTML = '<img src="<?php echo Yii::app()->baseUrl; ?>/photo/' + member.photo + '" alt="' + member.name + '" />';
+                        photoContainer.classList.remove('modal-photo-placeholder');
                     } else {
+                        var gradient = gradients[index % gradients.length];
                         photoContainer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>';
                         photoContainer.classList.add('modal-photo-placeholder');
+                        photoContainer.style.background = gradient;
                     }
 
                     modal.style.display = 'block';
