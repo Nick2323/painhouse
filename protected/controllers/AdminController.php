@@ -83,55 +83,58 @@ class AdminController extends Controller
     }
 
     public function actionAddmember(){
+        // Check session authentication
+        if(!$this->isAdminLoggedIn()){
+            echo json_encode(array('text' => 'Не авторизовано. Будь ласка, увійдіть знову.'));
+            return;
+        }
+
         $text="Помилка при передачі данних.";
-        if(isset($_POST['command'])){
-            if(isset($_FILES['File'])){
-                $model=new adminsAddMember;
-                $arr=explode(',',$_POST['command']);
-                if($this->check_password($arr[2],$arr[3])){
-                    if($arr[0]!=""){
-                        $find=adminsAddMember::model()->findBySql("SELECT ID FROM members WHERE FullName='".$arr[0]."'");
-                        if(!$find){
-                            $model->FullName=$arr[0];
-                            $model->Description=$arr[1];
-                            $file=CUploadedFile::getInstanceByName('File');
-                            if($this->image($file->getExtensionName())){
-                                $id=adminsAddMember::model()->findBySql("SELECT MAX(ID) FROM members")+1;
-                                $model->PhotoName=$id.'.'.$file->getExtensionName();
-                                    if($model->save()){
-                                        if($file->saveAs(Yii::app()->basePath.'\..\photo\\'.$model->PhotoName)){
-                                            $text="Файл успішно збережений.";
-                                        }
-                                        else{
-                                            $query=Yii::app()->db->createCommand('DELETE FROM members WHERE ID='.$model->ID);
-                                            $query->execute();
-                                            $text="Помилка при збережені фото.";
-                                        }
-                                    }
-                                    else{
-                                        $text="Помилка при збережені запису в базу данних.";
-                                    }
+
+        if(isset($_POST['name']) && isset($_FILES['File'])){
+            $model=new adminsAddMember;
+            $name = $_POST['name'];
+            $description = isset($_POST['description']) ? $_POST['description'] : '';
+
+            if($name!=""){
+                $find=adminsAddMember::model()->findBySql("SELECT ID FROM members WHERE FullName='".$name."'");
+                if(!$find){
+                    $model->FullName=$name;
+                    $model->Description=$description;
+                    $file=CUploadedFile::getInstanceByName('File');
+                    if($this->image($file->getExtensionName())){
+                        $id=adminsAddMember::model()->findBySql("SELECT MAX(ID) FROM members")+1;
+                        $model->PhotoName=$id.'.'.$file->getExtensionName();
+                        if($model->save()){
+                            if($file->saveAs(Yii::app()->basePath.'\..\photo\\'.$model->PhotoName)){
+                                $text="Учасника успішно додано!";
                             }
                             else{
-                                $text="Не допустиме розширення файлу... Допустимі розширення: jpg png jpeg.";
+                                $query=Yii::app()->db->createCommand('DELETE FROM members WHERE ID='.$model->ID);
+                                $query->execute();
+                                $text="Помилка при збереженні фото.";
                             }
                         }
                         else{
-                            $text="Член ансамблю з таким іменем вже існує.";
+                            $text="Помилка при збереженні запису в базу даних.";
                         }
                     }
                     else{
-                        $text="Введіть імя нового члена ансамблю.";
+                        $text="Недопустиме розширення файлу. Допустимі: jpg, png, jpeg.";
                     }
                 }
                 else{
-                    $text="Не вірний пароль, будь ласка, перезайдіть.";
+                    $text="Учасник з таким іменем вже існує.";
                 }
             }
             else{
-                $text="Оберіть фото члена ансамблю.";
+                $text="Введіть ім'я нового учасника.";
             }
         }
+        else{
+            $text="Оберіть фото учасника.";
+        }
+
         echo json_encode(array('text'=>$text));
     }
 
@@ -466,74 +469,74 @@ class AdminController extends Controller
     }
 
     public function actionGetstats(){
-        if(isset($_POST['login']) && isset($_POST['password'])){
-            if($this->check_password($_POST['login'], $_POST['password'])){
-                $membersCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM members")->queryScalar();
-                $songsCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM repertoire WHERE Name!=''")->queryScalar();
-                $mediaCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM media")->queryScalar();
-                $categoriesCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM repertoire WHERE Name=''")->queryScalar();
-
-                echo json_encode(array(
-                    'stats' => array(
-                        'members' => $membersCount,
-                        'songs' => $songsCount,
-                        'media' => $mediaCount,
-                        'categories' => $categoriesCount
-                    )
-                ));
-                return;
-            }
+        // Check session authentication
+        if(!$this->isAdminLoggedIn()){
+            echo json_encode(array('error' => 'Unauthorized'));
+            return;
         }
-        echo json_encode(array('error' => 'Unauthorized'));
+
+        $membersCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM members")->queryScalar();
+        $songsCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM repertoire WHERE Name!=''")->queryScalar();
+        $mediaCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM media")->queryScalar();
+        $categoriesCount = Yii::app()->db->createCommand("SELECT COUNT(*) FROM repertoire WHERE Name=''")->queryScalar();
+
+        echo json_encode(array(
+            'stats' => array(
+                'members' => $membersCount,
+                'songs' => $songsCount,
+                'media' => $mediaCount,
+                'categories' => $categoriesCount
+            )
+        ));
     }
 
     public function actionGetmembers(){
-        if(isset($_POST['login']) && isset($_POST['password'])){
-            if($this->check_password($_POST['login'], $_POST['password'])){
-                $members = Yii::app()->db->createCommand(
-                    "SELECT ID, FullName, PhotoName, Description FROM members ORDER BY ID"
-                )->queryAll();
-
-                echo json_encode(array('members' => $members));
-                return;
-            }
+        // Check session authentication
+        if(!$this->isAdminLoggedIn()){
+            echo json_encode(array('error' => 'Unauthorized'));
+            return;
         }
-        echo json_encode(array('error' => 'Unauthorized'));
+
+        $members = Yii::app()->db->createCommand(
+            "SELECT ID, FullName, PhotoName, Description FROM members ORDER BY ID"
+        )->queryAll();
+
+        echo json_encode(array('members' => $members));
     }
 
     public function actionGetrepertoire(){
-        if(isset($_POST['login']) && isset($_POST['password'])){
-            if($this->check_password($_POST['login'], $_POST['password'])){
-                $repertoire = Yii::app()->db->createCommand(
-                    "SELECT Name, Category FROM repertoire WHERE Name!='' ORDER BY Category, ID"
-                )->queryAll();
-
-                $categories = Yii::app()->db->createCommand(
-                    "SELECT DISTINCT Category FROM repertoire WHERE Name='' ORDER BY ID"
-                )->queryColumn();
-
-                echo json_encode(array(
-                    'repertoire' => $repertoire,
-                    'categories' => $categories
-                ));
-                return;
-            }
+        // Check session authentication
+        if(!$this->isAdminLoggedIn()){
+            echo json_encode(array('error' => 'Unauthorized'));
+            return;
         }
-        echo json_encode(array('error' => 'Unauthorized'));
+
+        $repertoire = Yii::app()->db->createCommand(
+            "SELECT Name, Category FROM repertoire WHERE Name!='' ORDER BY Category, ID"
+        )->queryAll();
+
+        $categories = Yii::app()->db->createCommand(
+            "SELECT DISTINCT Category FROM repertoire WHERE Name='' ORDER BY ID"
+        )->queryColumn();
+
+        echo json_encode(array(
+            'repertoire' => $repertoire,
+            'categories' => $categories
+        ));
     }
 
     public function actionGetmedia(){
-        if(isset($_POST['login']) && isset($_POST['password'])){
-            if($this->check_password($_POST['login'], $_POST['password'])){
-                $media = Yii::app()->db->createCommand(
-                    "SELECT ID, MediaFileName, MediaType, Description FROM media ORDER BY ID DESC"
-                )->queryAll();
-
-                echo json_encode(array('media' => $media));
-                return;
-            }
+        // Check session authentication
+        if(!$this->isAdminLoggedIn()){
+            echo json_encode(array('error' => 'Unauthorized'));
+            return;
         }
-        echo json_encode(array('error' => 'Unauthorized'));
+
+        $media = Yii::app()->db->createCommand(
+            "SELECT ID, MediaFileName, MediaType, Description FROM media ORDER BY ID DESC"
+        )->queryAll();
+
+        echo json_encode(array('media' => $media));
     }
 
 }

@@ -8,7 +8,7 @@ function loadStats() {
     $.ajax({
         type: "POST",
         url: baseUrl + "/admin/getstats",
-        data: { login: login, password: password },
+        data: {}, // Using session authentication
         dataType: "json",
         success: function(response) {
             if (response && response.stats) {
@@ -29,7 +29,7 @@ function loadMembers() {
     $.ajax({
         type: "POST",
         url: baseUrl + "/admin/getmembers",
-        data: { login: login, password: password },
+        data: {}, // Using session authentication
         dataType: "json",
         success: function(response) {
             if (response && response.members) {
@@ -97,7 +97,7 @@ function loadRepertoire() {
     $.ajax({
         type: "POST",
         url: baseUrl + "/admin/getrepertoire",
-        data: { login: login, password: password },
+        data: {}, // Using session authentication
         dataType: "json",
         success: function(response) {
             if (response && response.repertoire) {
@@ -155,7 +155,7 @@ function loadMedia() {
     $.ajax({
         type: "POST",
         url: baseUrl + "/admin/getmedia",
-        data: { login: login, password: password },
+        data: {}, // Using session authentication
         dataType: "json",
         success: function(response) {
             if (response && response.media) {
@@ -163,7 +163,7 @@ function loadMedia() {
             }
         },
         error: function() {
-            $('#media-grid').html('<div class="loading-placeholder">Помилка завантаження даних</div>');
+            $('#media-grid').html('<div class="loading-placeholder">Помилка завантаження даних</td></div>');
         }
     });
 }
@@ -249,8 +249,8 @@ function addMember(event) {
     }
 
     const fd = new FormData();
-    const command = [name, description, login, password];
-    fd.append('command', command.join(','));
+    fd.append('name', name);
+    fd.append('description', description);
     fd.append('File', file);
 
     const xhr = new XMLHttpRequest();

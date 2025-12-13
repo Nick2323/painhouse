@@ -293,6 +293,14 @@
 <!-- Styles -->
 <link rel="stylesheet" href="<?php echo Yii::app()->baseUrl; ?>/css/admin.css">
 
+<!-- Initialize Global JavaScript Variables -->
+<script type="text/javascript">
+    // Define global variables for admin panel
+    var baseUrl = '<?php echo Yii::app()->baseUrl; ?>';
+    var login = '<?php echo Yii::app()->session->get('admin_login', ''); ?>';
+    var password = ''; // Not used anymore - using session authentication
+</script>
+
 <!-- Scripts -->
 <script src="<?php echo Yii::app()->baseUrl; ?>/js/admin.js"></script>
 
