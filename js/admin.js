@@ -214,11 +214,37 @@ function openAddMemberModal() {
 }
 
 function openEditMemberModal(memberId) {
-    // Load member data and populate form
-    // For now, just open the modal
-    openModal('editMemberModal');
-    $('#edit-member-id').val(memberId);
-    // TODO: Load member data via AJAX
+    // Load member data via AJAX
+    $.ajax({
+        type: "POST",
+        url: baseUrl + "/admin/getmember",
+        data: { id: memberId },
+        dataType: "json",
+        success: function(response) {
+            if (response.success && response.member) {
+                const member = response.member;
+                $('#edit-member-id').val(member.ID);
+                $('#edit-member-name').val(member.FullName);
+                $('#edit-member-description').val(member.Description || '');
+
+                // Show current photo if exists
+                if (member.PhotoName) {
+                    $('#edit-current-photo-preview').html(
+                        `<img src="${baseUrl}/photo/${member.PhotoName}" style="max-width: 150px; max-height: 150px; border-radius: 8px;">`
+                    );
+                } else {
+                    $('#edit-current-photo-preview').html('<p>Немає фото</p>');
+                }
+
+                openModal('editMemberModal');
+            } else {
+                showToast('Помилка завантаження даних учасника', 'error');
+            }
+        },
+        error: function() {
+            showToast('Помилка з\'єднання з сервером', 'error');
+        }
+    });
 }
 
 function openAddRepertoireModal() {

@@ -523,6 +523,29 @@ class AdminController extends Controller
         echo json_encode(array('members' => $members));
     }
 
+    public function actionGetmember(){
+        // Check session authentication
+        if(!$this->isAdminLoggedIn()){
+            echo json_encode(array('error' => 'Unauthorized'));
+            return;
+        }
+
+        if(isset($_POST['id'])){
+            $id = $_POST['id'];
+            $member = Yii::app()->db->createCommand(
+                "SELECT ID, FullName, PhotoName, Description FROM members WHERE ID=".$id
+            )->queryRow();
+
+            if($member){
+                echo json_encode(array('success' => true, 'member' => $member));
+            } else {
+                echo json_encode(array('success' => false, 'message' => 'Учасника не знайдено'));
+            }
+        } else {
+            echo json_encode(array('success' => false, 'message' => 'ID не вказано'));
+        }
+    }
+
     public function actionGetrepertoire(){
         // Check session authentication
         if(!$this->isAdminLoggedIn()){
