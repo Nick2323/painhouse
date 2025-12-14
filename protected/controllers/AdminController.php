@@ -428,17 +428,23 @@ class AdminController extends Controller
 
     public function actionLogin(){
         $check=true;
+        $debugFile = Yii::app()->basePath . '/runtime/debug.log';
+
         if(isset($_POST['adminsForm']))
         {
                 $data=$_POST['adminsForm'];
                 $Login=$data['login'];
                 $Password=$data['password'];
 
-                // Temporary debug logging
-                error_log("Login attempt - Login: " . $Login);
-                error_log("Password SHA1: " . sha1($Password));
+                // Temporary debug logging to file
+                file_put_contents($debugFile, date('Y-m-d H:i:s') . " - Login attempt\n", FILE_APPEND);
+                file_put_contents($debugFile, "Login: " . $Login . "\n", FILE_APPEND);
+                file_put_contents($debugFile, "Password: " . $Password . "\n", FILE_APPEND);
+                file_put_contents($debugFile, "Password SHA1: " . sha1($Password) . "\n", FILE_APPEND);
 
                 if($this->check_password($Login,$Password)){
+                    file_put_contents($debugFile, "✓ Password check SUCCESS\n\n", FILE_APPEND);
+
                     // Set admin session
                     $this->setAdminSession($Login);
 
@@ -449,7 +455,7 @@ class AdminController extends Controller
                         "redirect" => Yii::app()->createUrl('admin/dashboard')
                     ));
                 } else {
-                    error_log("Password check failed");
+                    file_put_contents($debugFile, "✗ Password check FAILED\n\n", FILE_APPEND);
                 }
         }
         if($check){
