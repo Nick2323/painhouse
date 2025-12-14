@@ -65,21 +65,29 @@ $this->pageTitle = 'Репертуар - ' . Yii::app()->name;
 
 .repertoire-list {
     list-style: none;
-    padding-left: 2.5rem;
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
 }
 
 .repertoire-list li {
-    padding: 0.75rem 0;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
     font-size: 1.05rem;
     color: var(--text-dark);
-    border-bottom: 1px solid var(--bg-light);
+    background: var(--bg-light);
+    border-radius: 8px;
     position: relative;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .repertoire-list li:hover {
     color: var(--primary-color);
-    padding-left: 0.5rem;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background: white;
 }
 
 .repertoire-list li:before {
