@@ -399,9 +399,7 @@ function confirmDeleteMedia(id, fileName) {
 
 // Delete Member
 function deleteMember(id, name) {
-    if (!confirm('Ви впевнені, що хочете видалити учасника "' + name + '"?')) {
-        return;
-    }
+    closeModal('confirmDeleteModal'); // Close confirmation modal first
 
     $.ajax({
         type: "POST",
@@ -423,9 +421,7 @@ function deleteMember(id, name) {
 
 // Delete Repertoire
 function deleteRepertoire(name) {
-    if (!confirm('Ви впевнені, що хочете видалити пісню "' + name + '"?')) {
-        return;
-    }
+    closeModal('confirmDeleteModal'); // Close confirmation modal first
 
     $.ajax({
         type: "POST",
@@ -447,9 +443,7 @@ function deleteRepertoire(name) {
 
 // Delete Media
 function deleteMedia(id, fileName) {
-    if (!confirm('Ви впевнені, що хочете видалити файл "' + fileName + '"?')) {
-        return;
-    }
+    closeModal('confirmDeleteModal'); // Close confirmation modal first
 
     $.ajax({
         type: "POST",

@@ -530,18 +530,25 @@ class AdminController extends Controller
             return;
         }
 
-        $repertoire = Yii::app()->db->createCommand(
-            "SELECT Name, Category FROM repertoire WHERE Name!='' ORDER BY Category, ID"
-        )->queryAll();
+        try {
+            $repertoire = Yii::app()->db->createCommand(
+                "SELECT Name, Category FROM repertoire WHERE Name!='' ORDER BY Category, ID"
+            )->queryAll();
 
-        $categories = Yii::app()->db->createCommand(
-            "SELECT DISTINCT Category FROM repertoire WHERE Name='' ORDER BY ID"
-        )->queryColumn();
+            $categories = Yii::app()->db->createCommand(
+                "SELECT DISTINCT Category FROM repertoire WHERE Name='' ORDER BY ID"
+            )->queryColumn();
 
-        echo json_encode(array(
-            'repertoire' => $repertoire,
-            'categories' => $categories
-        ));
+            echo json_encode(array(
+                'repertoire' => $repertoire,
+                'categories' => $categories
+            ));
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'error' => 'Database error',
+                'message' => $e->getMessage()
+            ));
+        }
     }
 
     public function actionGetmedia(){
