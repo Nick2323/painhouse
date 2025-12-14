@@ -555,11 +555,11 @@ class AdminController extends Controller
 
         try {
             $repertoire = Yii::app()->db->createCommand(
-                "SELECT Name, Category FROM repertoire WHERE Name!='' ORDER BY Category, ID"
+                "SELECT ID, Name, Category FROM repertoire WHERE Name!='' ORDER BY Category, ID"
             )->queryAll();
 
             $categories = Yii::app()->db->createCommand(
-                "SELECT DISTINCT Category FROM repertoire WHERE Name='' ORDER BY ID"
+                "SELECT DISTINCT Category FROM repertoire WHERE Name=''"
             )->queryColumn();
 
             echo json_encode(array(
