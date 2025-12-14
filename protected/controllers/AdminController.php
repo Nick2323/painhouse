@@ -433,6 +433,11 @@ class AdminController extends Controller
                 $data=$_POST['adminsForm'];
                 $Login=$data['login'];
                 $Password=$data['password'];
+
+                // Temporary debug logging
+                error_log("Login attempt - Login: " . $Login);
+                error_log("Password SHA1: " . sha1($Password));
+
                 if($this->check_password($Login,$Password)){
                     // Set admin session
                     $this->setAdminSession($Login);
@@ -443,6 +448,8 @@ class AdminController extends Controller
                         "success" => true,
                         "redirect" => Yii::app()->createUrl('admin/dashboard')
                     ));
+                } else {
+                    error_log("Password check failed");
                 }
         }
         if($check){
