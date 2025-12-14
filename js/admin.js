@@ -78,7 +78,7 @@ function renderMembersTable(members) {
                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                             </svg>
                         </button>
-                        <button class="btn-delete" onclick="confirmDeleteMember('${escapeHtml(member.FullName)}')" title="Видалити">
+                        <button class="btn-delete" onclick="confirmDeleteMember(${member.ID}, '${escapeHtml(member.FullName)}')" title="Видалити">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="3 6 5 6 21 6"></polyline>
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -193,7 +193,7 @@ function renderMediaGrid(media) {
                 <div class="media-info">
                     <div class="media-name">${escapeHtml(item.MediaFileName)}.${item.MediaType}</div>
                     <div class="media-actions">
-                        <button class="btn-delete btn-sm" onclick="confirmDeleteMedia('${escapeHtml(item.MediaFileName)}')" title="Видалити">
+                        <button class="btn-delete btn-sm" onclick="confirmDeleteMedia(${item.ID}, '${escapeHtml(item.MediaFileName)}')" title="Видалити">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="3 6 5 6 21 6"></polyline>
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -287,28 +287,26 @@ function addRepertoire(event) {
         return;
     }
 
-    const data = {
-        Name: name,
-        Category: category,
-        login: login,
-        password: password
-    };
-
     $.ajax({
         type: "POST",
         url: baseUrl + "/admin/addrepertoire",
-        data: { command: data },
+        data: {
+            Name: name,
+            Category: category
+        },
         dataType: "json",
         success: function(response) {
             showToast(response.text, response.text.includes('успішно') ? 'success' : 'error');
             if (response.text.includes('успішно')) {
                 closeModal('addRepertoireModal');
+                $('#repertoire-name').val('');
+                $('#repertoire-category').val('');
                 loadRepertoire();
                 loadStats();
             }
         },
         error: function() {
-            showToast('Помилка з\'єднання', 'error');
+            showToast('Помилка з\'єднання з сервером', 'error');
         }
     });
 }
@@ -322,60 +320,62 @@ function uploadMedia(event) {
     const description = $('#media-description').val();
 
     if (!file) {
-        showToast('Оберіть файл', 'error');
+        showToast('Оберіть файл для завантаження', 'error');
         return;
     }
 
+    // Get file name without extension
     const fileName = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
-    const fileExt = file.name.split('.').pop();
+    const fileExt = file.name.split('.').pop().toLowerCase();
 
     const fd = new FormData();
+    fd.append('fileName', fileName);
+    fd.append('fileType', fileExt);
+    fd.append('description', description);
     fd.append('file', file);
-    fd.append('command', JSON.stringify([fileName, fileExt, description, login, password]));
 
+    // Show upload progress
     const xhr = new XMLHttpRequest();
     xhr.open('POST', baseUrl + '/admin/uploadmedia', true);
 
-    // Progress
     xhr.upload.onprogress = function(e) {
         if (e.lengthComputable) {
-            const percent = (e.loaded / e.total) * 100;
-            $('#upload-progress').show();
-            $('#progress-fill').css('width', percent + '%');
-            $('#progress-text').text(Math.round(percent) + '%');
+            const percentComplete = (e.loaded / e.total) * 100;
+            console.log('Upload progress:', percentComplete + '%');
+            // You can update a progress bar here if you have one
         }
     };
 
     xhr.onload = function() {
-        $('#upload-progress').hide();
-        $('#progress-fill').css('width', '0%');
-
         if (this.status == 200) {
-            const text = this.responseText;
-            showToast(text, text.includes('успішно') ? 'success' : 'error');
-            if (text.includes('успішно')) {
+            const resp = JSON.parse(this.response);
+            showToast(resp.text, resp.text.includes('успішно') ? 'success' : 'error');
+            if (resp.text.includes('успішно')) {
                 closeModal('uploadMediaModal');
+                $('#media-file').val('');
+                $('#media-description').val('');
                 loadMedia();
                 loadStats();
             }
+        } else {
+            showToast('Помилка при завантаженні файлу', 'error');
         }
     };
 
     xhr.onerror = function() {
-        $('#upload-progress').hide();
-        showToast('Помилка з\'єднання', 'error');
+        showToast('Помилка з\'єднання з сервером', 'error');
     };
 
     xhr.send(fd);
 }
 
 // Delete Confirmations
-function confirmDeleteMember(name) {
+function confirmDeleteMember(id, name) {
     $('#delete-message').text(`Ви впевнені, що хочете видалити учасника "${name}"?`);
     openModal('confirmDeleteModal');
 
     $('#confirm-delete-btn').off('click').on('click', function() {
-        deleteMember(name);
+        deleteMember(id, name);
     });
 }
 
@@ -388,30 +388,27 @@ function confirmDeleteRepertoire(name) {
     });
 }
 
-function confirmDeleteMedia(name) {
-    $('#delete-message').text(`Ви впевнені, що хочете видалити файл "${name}"?`);
+function confirmDeleteMedia(id, fileName) {
+    $('#delete-message').text(`Ви впевнені, що хочете видалити файл "${fileName}"?`);
     openModal('confirmDeleteModal');
 
     $('#confirm-delete-btn').off('click').on('click', function() {
-        deleteMedia(name);
+        deleteMedia(id, fileName);
     });
 }
 
 // Delete Member
-function deleteMember(name) {
-    const data = {
-        name: name,
-        login: login,
-        password: password
-    };
+function deleteMember(id, name) {
+    if (!confirm('Ви впевнені, що хочете видалити учасника "' + name + '"?')) {
+        return;
+    }
 
     $.ajax({
         type: "POST",
-        url: baseUrl + "/admin/deletemember",
-        data: { command: data },
+        url: baseUrl + "/admin/delmember",
+        data: { id: id },
         dataType: "json",
         success: function(response) {
-            closeModal('confirmDeleteModal');
             showToast(response.text, response.text.includes('успішно') ? 'success' : 'error');
             if (response.text.includes('успішно')) {
                 loadMembers();
@@ -419,27 +416,23 @@ function deleteMember(name) {
             }
         },
         error: function() {
-            closeModal('confirmDeleteModal');
-            showToast('Помилка з\'єднання', 'error');
+            showToast('Помилка з\'єднання з сервером', 'error');
         }
     });
 }
 
 // Delete Repertoire
 function deleteRepertoire(name) {
-    const data = {
-        name: name,
-        login: login,
-        password: password
-    };
+    if (!confirm('Ви впевнені, що хочете видалити пісню "' + name + '"?')) {
+        return;
+    }
 
     $.ajax({
         type: "POST",
-        url: baseUrl + "/admin/deleterepertoire",
-        data: { command: data },
+        url: baseUrl + "/admin/delrepertoire",
+        data: { name: name },
         dataType: "json",
         success: function(response) {
-            closeModal('confirmDeleteModal');
             showToast(response.text, response.text.includes('успішно') ? 'success' : 'error');
             if (response.text.includes('успішно')) {
                 loadRepertoire();
@@ -447,27 +440,23 @@ function deleteRepertoire(name) {
             }
         },
         error: function() {
-            closeModal('confirmDeleteModal');
-            showToast('Помилка з\'єднання', 'error');
+            showToast('Помилка з\'єднання з сервером', 'error');
         }
     });
 }
 
 // Delete Media
-function deleteMedia(name) {
-    const data = {
-        name: name,
-        login: login,
-        password: password
-    };
+function deleteMedia(id, fileName) {
+    if (!confirm('Ви впевнені, що хочете видалити файл "' + fileName + '"?')) {
+        return;
+    }
 
     $.ajax({
         type: "POST",
-        url: baseUrl + "/admin/deletemedia",
-        data: { command: data },
+        url: baseUrl + "/admin/delmedia",
+        data: { id: id },
         dataType: "json",
         success: function(response) {
-            closeModal('confirmDeleteModal');
             showToast(response.text, response.text.includes('успішно') ? 'success' : 'error');
             if (response.text.includes('успішно')) {
                 loadMedia();
@@ -475,8 +464,7 @@ function deleteMedia(name) {
             }
         },
         error: function() {
-            closeModal('confirmDeleteModal');
-            showToast('Помилка з\'єднання', 'error');
+            showToast('Помилка з\'єднання з сервером', 'error');
         }
     });
 }
@@ -485,40 +473,44 @@ function deleteMedia(name) {
 function changePassword(event) {
     event.preventDefault();
 
-    const pass1 = $('#new-password-1').val();
-    const pass2 = $('#new-password-2').val();
+    const currentPassword = $('#current-password').val();
+    const newPassword = $('#new-password').val();
+    const confirmPassword = $('#confirm-password').val();
 
-    if (pass1 !== pass2) {
-        showToast('Паролі не співпадають', 'error');
+    if (!currentPassword || !newPassword || !confirmPassword) {
+        showToast('Заповніть всі поля', 'error');
         return;
     }
 
-    if (pass1.length < 4) {
-        showToast('Пароль має бути не менше 4 символів', 'error');
+    if (newPassword !== confirmPassword) {
+        showToast('Новий пароль та підтвердження не співпадають', 'error');
         return;
     }
 
-    const data = {
-        pass1: pass1,
-        pass2: pass2,
-        login: login,
-        password: password
-    };
+    if (newPassword.length < 6) {
+        showToast('Пароль має бути не менше 6 символів', 'error');
+        return;
+    }
 
     $.ajax({
         type: "POST",
         url: baseUrl + "/admin/changepass",
-        data: { command: data },
+        data: {
+            currentPassword: currentPassword,
+            newPassword: newPassword,
+            confirmPassword: confirmPassword
+        },
         dataType: "json",
         success: function(response) {
             showToast(response.text, response.text.includes('успішно') ? 'success' : 'error');
             if (response.text.includes('успішно')) {
-                $('#change-password-form')[0].reset();
-                password = pass1; // Update password variable
+                $('#current-password').val('');
+                $('#new-password').val('');
+                $('#confirm-password').val('');
             }
         },
         error: function() {
-            showToast('Помилка з\'єднання', 'error');
+            showToast('Помилка з\'єднання з сервером', 'error');
         }
     });
 }
