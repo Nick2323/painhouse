@@ -17,11 +17,11 @@ header("Content-Type: text/html; charset=UTF-8")
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/modern.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="<?php echo Yii::app()->baseUrl;?>/jc/bootstrap.js"></script>
-    <script src="<?php echo Yii::app()->baseUrl;?>/jc/bootstrap.min.js"></script>
-    <script src="<?php echo Yii::app()->baseUrl;?>/jc/main.js"></script>
-    <script src="<?php echo Yii::app()->baseUrl;?>/jc/modernizr.js"></script>
-    <script src="<?php echo Yii::app()->baseUrl;?>/jc/snap.svg-min.js"></script>
+    <script src="<?php echo Yii::app()->baseUrl;?>/js/bootstrap.js"></script>
+    <script src="<?php echo Yii::app()->baseUrl;?>/js/bootstrap.min.js"></script>
+    <script src="<?php echo Yii::app()->baseUrl;?>/js/main.js"></script>
+    <script src="<?php echo Yii::app()->baseUrl;?>/js/modernizr.js"></script>
+    <script src="<?php echo Yii::app()->baseUrl;?>/js/snap.svg-min.js"></script>
 
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700&display=swap' rel='stylesheet' type='text/css'>
