@@ -15,8 +15,8 @@ $this->pageTitle = 'Контакти - ' . Yii::app()->name;
             <!-- Телефони -->
             <div class="contact-card modern-card fade-in">
                 <div class="contact-icon">
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 22.3211C19.4673 22.3211 18.9346 22.2222 18.4019 22.0245C14.6542 20.6402 11.2243 18.267 8.11215 15.1542C5.00935 12.0414 2.63551 8.61153 1.25234 4.86386C0.953271 3.97196 1.25234 2.98131 1.94393 2.28972C2.63551 1.59813 3.62617 1.29907 4.61682 1.49673L7.98131 2.08879C8.87383 2.28645 9.56542 2.97804 9.76308 3.87056L10.5514 7.23505C10.7491 8.12757 10.3551 9.11822 9.66355 9.71028L7.68692 11.2921C9.26869 14.1589 11.4019 16.1355 14.2687 17.618L15.8505 15.6415C16.4421 14.9499 17.4327 14.6508 18.3252 14.8485L21.6897 15.6369C22.5822 15.8346 23.2738 16.5262 23.4715 17.4187L24.0636 20.7832C24.2612 21.6757 23.8673 22.3211 23.1757 22.3211H20Z" fill-opacity="0.9"/>
                     </svg>
                 </div>
                 <h3>Телефони</h3>
@@ -37,9 +37,8 @@ $this->pageTitle = 'Контакти - ' . Yii::app()->name;
             <!-- Email -->
             <div class="contact-card modern-card fade-in" style="animation-delay: 0.1s;">
                 <div class="contact-icon">
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6ZM20 6L12 11L4 6H20ZM20 18H4V8L12 13L20 8V18Z" fill-opacity="0.9"/>
                     </svg>
                 </div>
                 <h3>Електронна пошта</h3>
@@ -55,9 +54,8 @@ $this->pageTitle = 'Контакти - ' . Yii::app()->name;
             <!-- Локація -->
             <div class="contact-card modern-card fade-in" style="animation-delay: 0.2s;">
                 <div class="contact-icon">
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                        <circle cx="12" cy="10" r="3"></circle>
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill-opacity="0.9"/>
                     </svg>
                 </div>
                 <h3>Адреса</h3>
