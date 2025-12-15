@@ -99,11 +99,14 @@ $this->pageTitle = 'Контакти - ' . Yii::app()->name;
 
 .contact-card {
     text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .contact-icon {
     color: var(--primary-color);
     margin-bottom: 1.5rem;
+    order: -1;
 }
 
 .contact-card h3 {
