@@ -15,9 +15,7 @@ $this->pageTitle = 'Контакти - ' . Yii::app()->name;
             <!-- Телефони -->
             <div class="contact-card modern-card fade-in">
                 <div class="contact-icon">
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.21-3.72-6.56-6.56l1.97-1.57c.27-.27.35-.67.24-1.01-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.75 0 .99-.65.99-.99v-3.45c0-.54-.45-.98-.99-.98z" fill-opacity="0.9"/>
-                    </svg>
+                    <img src="/images/phone.svg" alt="Phone Icon">
                 </div>
                 <h3>Телефони</h3>
                 <div class="contact-info">
@@ -37,9 +35,7 @@ $this->pageTitle = 'Контакти - ' . Yii::app()->name;
             <!-- Email -->
             <div class="contact-card modern-card fade-in" style="animation-delay: 0.1s;">
                 <div class="contact-icon">
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6ZM20 6L12 11L4 6H20ZM20 18H4V8L12 13L20 8V18Z" fill-opacity="0.9"/>
-                    </svg>
+                    <img src="/images/email.svg" alt="Email Icon">
                 </div>
                 <h3>Електронна пошта</h3>
                 <div class="contact-info">
@@ -54,9 +50,7 @@ $this->pageTitle = 'Контакти - ' . Yii::app()->name;
             <!-- Локація -->
             <div class="contact-card modern-card fade-in" style="animation-delay: 0.2s;">
                 <div class="contact-icon">
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22S19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill-opacity="0.9"/>
-                    </svg>
+                    <img src="/images/location.svg" alt="Location Icon">
                 </div>
                 <h3>Адреса</h3>
                 <div class="contact-info">
@@ -104,9 +98,14 @@ $this->pageTitle = 'Контакти - ' . Yii::app()->name;
 }
 
 .contact-icon {
-    color: var(--primary-color);
     margin-bottom: 1.5rem;
     order: -1;
+}
+
+.contact-icon img {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
 }
 
 .contact-card h3 {
