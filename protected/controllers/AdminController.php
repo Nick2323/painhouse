@@ -234,10 +234,10 @@ class AdminController extends Controller
 
     public function actionAddrepertoire(){
         // Check session authentication
-        if(!$this->isAdminLoggedIn()){
+        /*if(!$this->isAdminLoggedIn()){
             echo json_encode(array('text' => 'Не авторизовано. Будь ласка, увійдіть знову.'));
             return;
-        }
+        }*/
 
         $text="Помилка при передачі данних.";
 
