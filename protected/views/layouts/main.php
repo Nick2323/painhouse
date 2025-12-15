@@ -36,7 +36,7 @@ header("Content-Type: text/html; charset=UTF-8")
             <div class="header-content">
                 <div class="brand">
                     <a href="<?php echo Yii::app()->baseUrl; ?>/index.php?r=site/index">
-                        <img src="<?php echo Yii::app()->baseUrl; ?>/images/header1.png" alt="Ансамбль Воля Логотип" style="height: 50px;">
+                        <img src="<?php echo Yii::app()->baseUrl; ?>/images/header1.png" alt="Ансамбль Воля Логотип" style="height: 150px;">
                     </a>
                 </div>
             </div>
