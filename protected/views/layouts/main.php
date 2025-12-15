@@ -1,4 +1,4 @@
-﻿<?php /* @var $this Controller */
+<?php /* @var $this Controller */
 header("Content-Type: text/html; charset=UTF-8")
 ?>
 <!DOCTYPE html>
@@ -35,8 +35,9 @@ header("Content-Type: text/html; charset=UTF-8")
         <div class="container">
             <div class="header-content">
                 <div class="brand">
-                    <h1 class="site-title">Ансамбль "Воля"</h1>
-                    <p class="site-subtitle">Український народний вокально-інструментальний ансамбль</p>
+                    <a href="<?php echo Yii::app()->baseUrl; ?>/index.php?r=site/index">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png" alt="Ансамбль Воля Логотип" style="height: 50px;">
+                    </a>
                 </div>
             </div>
         </div>
